@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.idea/
+*.db
+owner_lbph_model.yml
+daily_report.txt
+.pytest_cache/
+.coverage
+htmlcov/
+*.pyc
+*.pyo
+Thumbs.db
+.env
+.env.local
+*.log

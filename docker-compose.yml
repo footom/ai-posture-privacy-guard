@@ -1,0 +1,22 @@
+services:
+  # 服務 1：Streamlit 網頁儀表板
+  dashboard:
+    build: .
+    container_name: posture_dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./:/app
+    restart: always
+
+  # 服務 2：AI 視訊監控主程式
+  monitor:
+    build: .
+    container_name: posture_monitor
+    command: python src/main.py
+    devices:
+      # 將主機的預設攝影機（/dev/video0）掛載進 Linux 容器
+      - "/dev/video0:/dev/video0"
+    volumes:
+      - ./:/app
+    restart: always

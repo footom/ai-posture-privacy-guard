@@ -1,0 +1,8 @@
+opencv-contrib-python-headless>=4.10.0.84
+mediapipe==0.10.21
+streamlit>=1.35
+plotly>=5.22
+pandas>=2.2
+Pillow>=10.3
+pystray>=0.19.5
+psutil
