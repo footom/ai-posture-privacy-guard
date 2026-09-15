@@ -1,0 +1,18 @@
+services:
+  # 服務：Streamlit網頁儀表板
+  # 唯一適合在Windows上用Docker跑的服務——不依賴攝影機或Windows系統API。
+  dashboard:
+    build: .
+    container_name: posture_dashboard
+    command: streamlit run src/dashboard.py --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./:/app
+    restart: always
+
+# 注意：monitor（主監控程式）依賴：
+#   1. 攝影機直通（/dev/video0 是 Linux 專用的裝置節點寫法，Windows 上無法掛載）
+#   2. LockWorkStation()（Windows 原生鎖屏 API，容器內的 Linux 環境無法呼叫）
+# 因此不透過Docker執行，請直接在Windows本機跑：
+#   python src/main.py

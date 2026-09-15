@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+.idea/
+.git/
+*.db
+owner_lbph_model.yml
+daily_report.txt

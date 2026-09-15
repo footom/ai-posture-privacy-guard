@@ -1,0 +1,19 @@
+# 僅適用於Linux主機。與docker-compose.yml疊加使用：
+#   docker compose -f docker-compose.yml -f docker-compose.linux.yml up -d
+#
+# 加入monitor服務（AI視訊監控主程式），需要：
+#   - 主機具備 /dev/video0（Linux v4l2攝影機裝置節點）
+#   - 注意：LockWorkStation() 是Windows API，在Linux容器內無法呼叫，
+#     觸發資安風險時會自動改為跳出GUI強制警告視窗，而非實際鎖屏。
+
+services:
+  monitor:
+    build: .
+    container_name: posture_monitor
+    command: python src/main.py
+    devices:
+      # 將主機的預設攝影機（/dev/video0）掛載進Linux容器
+      - "/dev/video0:/dev/video0"
+    volumes:
+      - ./:/app
+    restart: always

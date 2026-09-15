@@ -1,0 +1,31 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install system dependencies for OpenCV
+        run: sudo apt-get update && sudo apt-get install -y libgl1
+
+      # requirements.txt有精確鎖定 mediapipe==0.10.21，
+      # CI一定要照這個版本裝，否則test_models.py會在import階段就失敗
+      # (新版mediapipe拿掉了legacy mp.solutions API)
+      - name: Install dependencies
+        run: pip install -r requirements_dev.txt
+
+      - name: Run tests
+        run: pytest
